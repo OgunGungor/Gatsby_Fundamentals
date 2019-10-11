@@ -1,18 +1,18 @@
 const path = require('path')
 
-module.exports.onCreateNode = ({node , actions}) => {
-    const { createNodeField } = actions;
+// module.exports.onCreateNode = ({node , actions}) => {
+//     const { createNodeField } = actions;
 
-    if(node.internal.type === 'MarkdownRemark'){
-        const slug = path.basename(node.fileAbsolutePath ,'.md');
+//     if(node.internal.type === 'MarkdownRemark'){
+//         const slug = path.basename(node.fileAbsolutePath ,'.md');
         
-        createNodeField({
-            node,
-            name: 'slug',
-            value: slug
-        });
-    }    
-}
+//         createNodeField({
+//             node,
+//             name: 'slug',
+//             value: slug
+//         });
+//     }    
+// }
 
 module.exports.createPages = async ( {graphql , actions} ) => {
     
@@ -20,27 +20,26 @@ module.exports.createPages = async ( {graphql , actions} ) => {
     
     //get path to template
     const blogPostTemplate = path.resolve('./src/templates/BlogPost.js');
-    //get markdown data  
+    //get markdown data  gatsby-source-graphql plugini ile kendi GRAPHQL API mize erisip orada slugumuza sorgu atacaz.
+    //slug ismimizi ise blog linkinin ne olmasini istiyorsak ona gore verecegiz
     const response = await graphql(`
         query{
-            allMarkdownRemark{
-                edges{
-                    node{
-                	    fields{
-                            slug
-                        }
-                    }
+            allContentfulBlogPost{
+              edges{
+                node{
+                  slug
                 }
-            }
-        }
+              }
+            }   
+          }
     `)
     //create new pages
-    response.data.allMarkdownRemark.edges.forEach((edge) => {
+    response.data.allContentfulBlogPost.edges.forEach((edge) => {
         createPage({
             component: blogPostTemplate,
-            path: `/blog/${edge.node.fields.slug}`,
+            path: `/blog/${edge.node.slug}`,
             context: {
-                slug: edge.node.fields.slug
+                slug: edge.node.slug
             }
         })
     });
