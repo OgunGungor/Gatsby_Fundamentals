@@ -7,6 +7,7 @@ export default function IndexPage() {
         <Layout headTitle = "Home">
             <h1>Home Page</h1>
             <p>Home Page</p>
+            <p>A new paragraph added to home page</p>
         </Layout>
     )
 }
