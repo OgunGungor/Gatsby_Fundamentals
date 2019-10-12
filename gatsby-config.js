@@ -12,6 +12,7 @@ module.exports = {
   plugins: [
     //gatsby-source-graphql yukleyip graphql API mize sorgu atabiliriz
     //https://www.youtube.com/watch?v=wNUg1jpj9T0  17.40
+    'gatsby-plugin-react-helmet',
     'gatsby-plugin-sass',
     {
       resolve: 'gatsby-source-filesystem',

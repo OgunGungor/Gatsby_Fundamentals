@@ -33,7 +33,7 @@ export default function BlogPage() {
     const edges = data.allContentfulBlogPost.edges;
 
     return (
-        <Layout>
+        <Layout headTitle = "Blog">
             <ol>
                 {
                     edges.map((one) => {
